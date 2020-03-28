@@ -35,6 +35,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 
 gem 'ogp'
+gem 'faraday'
 
 gem 'geocoder'
 

@@ -35,8 +35,9 @@ ActiveRecord::Schema.define(version: 2020_03_28_150648) do
     t.string "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "national"
+    t.boolean "national", default: false
     t.index ["lonlat"], name: "index_businesses_on_lonlat", using: :gist
+    t.index ["national"], name: "index_businesses_on_national"
   end
 
   create_table "locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
