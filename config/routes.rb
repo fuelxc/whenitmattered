@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :locations
+  resources :articles
   resources :businesses
   devise_for :users
   root 'pages#index'

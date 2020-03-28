@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @article.url %>
+</p>
+
+<p>
+  <strong>Opengraph data:</strong>
+  <%= @article.opengraph_data %>
+</p>
+
+<p>
+  <strong>Business:</strong>
+  <%= @article.business_id %>
+</p>
+
+<p>
+  <strong>Crawled at:</strong>
+  <%= @article.crawled_at %>
+</p>
+
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
