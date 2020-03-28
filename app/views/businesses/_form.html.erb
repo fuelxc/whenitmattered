@@ -1,0 +1,37 @@
+<%= form_with(model: business, local: true) do |form| %>
+  <% if business.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(business.errors.count, "error") %> prohibited this business from being saved:</h2>
+
+      <ul>
+        <% business.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lonlat %>
+    <%= form.text_field :lonlat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :opengraph_data %>
+    <%= form.text_field :opengraph_data %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

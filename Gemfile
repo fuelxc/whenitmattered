@@ -7,6 +7,9 @@ ruby '2.6.3'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
+gem 'pg_search'
+gem 'activerecord-postgis-adapter'
+
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -30,6 +33,10 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
+
+gem 'ogp'
+
+gem 'geocoder'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @business.name %>
+</p>
+
+<p>
+  <strong>Lonlat:</strong>
+  <%= @business.lonlat %>
+</p>
+
+<p>
+  <strong>Opengraph data:</strong>
+  <%= @business.opengraph_data %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @business.notes %>
+</p>
+
+<%= link_to 'Edit', edit_business_path(@business) %> |
+<%= link_to 'Back', businesses_path %>
