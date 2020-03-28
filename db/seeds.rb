@@ -17,11 +17,11 @@ Business.create(
   locations_attributes: [
     {
       name: 'Arcadia',
-      address: '4900 E. Indian School Rd. Phoenix, AZ 85018'
+      address: '4900 E. Indian School Rd., Phoenix, AZ 85018'
     },
     {
       name: 'Gilbert',
-      address: '335 N. Gilbert Rd. Suite 102 Gilbert, AZ 85234'
+      address: '335 N. Gilbert Rd., Gilbert, AZ 85234'
     }
   ]
 )
