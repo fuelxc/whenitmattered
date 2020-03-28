@@ -1,7 +1,6 @@
 class Business < ApplicationRecord
   searchkick word_start: [:autocomplete_name], suggest: [:name], locations: [:location]
 
-  before_save :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
   has_many :articles, dependent: :destroy
   has_many :locations, dependent: :destroy
 
@@ -16,6 +15,9 @@ class Business < ApplicationRecord
     end
   end
 
+  before_save :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
+  after_commit :reindex_locations, if: ->(obj){ obj.name_changed? }
+
   def search_data
     {
       name: name,
@@ -28,5 +30,9 @@ class Business < ApplicationRecord
 
   def all_locations_geography
     locations.collect(&:geography_hash).compact
+  end
+
+  def reindex_locations
+    locations.map(&:reindex)
   end
 end

@@ -10,15 +10,14 @@ class Location < ApplicationRecord
     end
   end
 
-  delegate :name, to: :business
+  before_save :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
+  after_commit :reindex_business, if: ->(obj){ obj.address_changed? }
 
-  def self.nearby(latitude:, longitude:, distance: 5000)
-    where("ST_DWithin(meetups.coords, ST_GeographyFromText('SRID=4326;POINT(:lon :lat)'), 
-      :distance)", lon: longitude, lat: latitude, distance: distance)
-  end
+  delegate :name, to: :business
 
   def geography_hash
     return nil unless latlon
+    
     {
       lat: latlon.latitude,
       lon: latlon.longitude
@@ -42,5 +41,11 @@ class Location < ApplicationRecord
 
   def latitude
     latlon&.latitude
+  end
+
+  private
+
+  def reindex_business
+    business.reindex
   end
 end
