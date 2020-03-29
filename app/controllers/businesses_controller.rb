@@ -4,7 +4,7 @@ class BusinessesController < ApplicationController
   # GET /businesses
   # GET /businesses.json
   def index
-    @businesses = Business.all
+    @businesses = load_businesses
   end
 
   # GET /businesses/1
@@ -62,13 +62,26 @@ class BusinessesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_business
-      @business = Business.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def business_params
-      params.require(:business).permit(:name, :lonlat, :opengraph_data, :notes)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_business
+    @business = Business.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def business_params
+    params.require(:business).permit(:name, :lonlat, :opengraph_data, :notes)
+  end
+
+  def search_params
+    params.permit(:q)
+  end
+
+  def load_businesses
+    if search_params.keys.length == 3
+      Business.search search_params[:q] limit: 50
+    else
+      Business.limit(10)
     end
+  end
 end

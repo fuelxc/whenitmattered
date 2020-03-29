@@ -1,53 +1,38 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {asyncContainer, Typeahead} from 'react-bootstrap-typeahead';
 
-const AsyncTypeahead = asyncContainer(Typeahead);
+import MapContainer from './MapContainer';
+import LocationSearchInput from './LocationSearchInput';
 
 class Search extends React.Component {
-  state = {
-    query: '',
-    location: '',
-    latitude: undefined,
-    longitude: undefined,
-    isLoading: false
+  constructor(props) {
+    super(props);
+    this.state = { location: undefined, map: undefined };
   }
 
-  handleInputChange = () => {
-    this.setState({
-      query: this.search.value
-    })
+  placeChangeHandler = place => {
+    this.state.map.setCenter(place.geometry.location);
+    this.state.map.setZoom(14);
   }
 
-  searchUrl = (query) => {
-    return `${this.props.url}?q=${query}`
+  readyHandler = (mapProps, map) => {
+    this.setState({map: map})
   }
 
   render () {
     return (
       <React.Fragment>
-        <AsyncTypeahead
-          id={this.props.id}
-          isLoading={this.state.isLoading}
-          labelKey={option => `${option.name}`}
-          bsSize='large'
-          minLength={2}
-          maxResults={20}
-          placeholder={this.props.placeHolder}
-          onSearch={(query) => {
-            this.setState({isLoading: true});
-            fetch(this.searchUrl(query))
-              .then(resp => resp.json())
-              .then(json => this.setState({
-                isLoading: false,
-                options: json,
-              }));
-          }}
-          options={this.state.options}
+        <LocationSearchInput onPlaceChange={this.placeChangeHandler} />
+        <MapContainer initialCenter={this.props.initialCenter} 
+                      onReady={this.readyHandler}
         />
       </React.Fragment>
-    );
+    )
   }
 }
-
+Search.defaultProps = {
+  initialCenter: {
+    lat: 33.4484, lng: -112.0740
+  }
+}
 export default Search

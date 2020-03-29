@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    @locations = load_locations
   end
 
   # GET /locations/1
@@ -62,13 +62,28 @@ class LocationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_location
-      @location = Location.find(params[:id])
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_location
+    @location = Location.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def location_params
-      params.require(:location).permit(:business_id, :name, :address, :notes, :latlon)
+  # Only allow a list of trusted parameters through.
+  def location_params
+    params.require(:location).permit(:business_id, :name, :address, :notes, :latlon)
+  end
+
+  def search_params
+    params.permit(:lat, :lon, :radius, :tl_lat, :tl_lon, :br_lat, :br_lon)
+  end
+
+  def load_locations
+    if search_params.has_key?(:radius) && search_params.keys.length == 3
+      Location.search "*", where: {location: {near: {lat: search_params[:lat], lon: search_params[:lon]}, within: search_params[:radius]}}, limit: 50
+    elsif search_params.has_key?(:tl_lat) && search_params.keys.length == 4
+      Location.search "*", where: {location: {top_left: {lat: search_params[:tl_lat], lon: search_params[:tl_lon]}, bottom_right: {lat: search_params[:br_lat], lon: search_params[:br_lon]}}}, limit: 50
+    else
+      Location.limit(10)
     end
+  end
 end

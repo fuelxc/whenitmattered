@@ -1,70 +1,62 @@
 import React from 'react';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
+import PropTypes from 'prop-types';
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: '' };
   }
 
-  handleChange = address => {
-    this.setState({ address });
-  };
+  componentDidMount() {
+    if (!window.google) {
+      throw new Error(
+        '[react-places-autocomplete]: Google Maps JavaScript API library must be loaded. See: https://github.com/kenny-hibino/react-places-autocomplete#load-google-library'
+      );
+    }
 
-  handleSelect = address => {
-    // geocodeByAddress(address)
-    //   .then(results => getLatLng(results[0]))
-    //   .then(latLng => console.log('Success', latLng))
-    //   .catch(error => console.error('Error', error));
-  };
+    if (!window.google.maps.places) {
+      throw new Error(
+        '[react-places-autocomplete]: Google Maps Places library must be loaded. Please add `libraries=places` to the src URL. See: https://github.com/kenny-hibino/react-places-autocomplete#load-google-library'
+      );
+    }
+
+    this.input = document.getElementById('locationInput');
+    this.autocomplete = new google.maps.places.Autocomplete(this.input);
+    this.autocomplete.setFields(
+        ['address_components', 'geometry', 'icon', 'name']);
+    
+    this.autocomplete.setTypes(['(regions)']);
+
+    let { onPlaceChange } = this.props;
+
+    this.autocomplete.addListener('place_changed', function() {
+      onPlaceChange(this.getPlace());
+    });
+  }
 
   render() {
     return (
-      <PlacesAutocomplete
-        value={this.state.address}
-        onChange={this.handleChange}
-        onSelect={this.handleSelect}
-        debounce={750}
-        searchOptions={{types: ['(regions)']}}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <input
-              {...getInputProps({
-                placeholder: 'Search Places ...',
-                className: 'location-search-input',
-              })}
-            />
-            <div className="autocomplete-dropdown-container">
-              {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
-                const className = suggestion.active
-                  ? 'suggestion-item--active'
-                  : 'suggestion-item';
-                // inline style for demonstration purpose
-                const style = suggestion.active
-                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                return (
-                  <div
-                    {...getSuggestionItemProps(suggestion, {
-                      className,
-                      style,
-                    })}
-                  >
-                    <span>{suggestion.description}</span>
-                  </div>
-                );
-              })}
+      <section className="bg-dark p-2">
+        <div className="container">
+          <div className="row justify-content-md-center">
+            <div className="col-sm-12 col-md-6">
+              <div className="input-group input-group-lg">
+                <input id="locationInput" className='form-control' placeholder="Search by Location..." />
+              </div>
             </div>
           </div>
-        )}
-      </PlacesAutocomplete>
+        </div>
+      </section>
     );
   }
 }
+
+LocationSearchInput.defaultProps = {
+  onPlaceChange: place => ({})
+}
+
+LocationSearchInput.propTypes = {
+  onPlaceChange: PropTypes.func
+}
+
 
 export default LocationSearchInput

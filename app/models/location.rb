@@ -13,6 +13,8 @@ class Location < ApplicationRecord
   before_save :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
   after_commit :reindex_business, if: ->(obj){ obj.address_changed? }
 
+  delegate :articles, to: :business
+
   def geography_hash
     return nil unless latlon
 

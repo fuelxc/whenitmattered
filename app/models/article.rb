@@ -11,6 +11,10 @@ class Article < ApplicationRecord
 
   before_create :scrape_opengraph
 
+  def headline
+    opengraph_data.fetch("description", nil)
+  end
+
   private
 
   def scrape_opengraph
