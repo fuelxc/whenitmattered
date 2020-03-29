@@ -3,6 +3,22 @@
     <h1>When It Mattered</h1>
     <p class="lead text-muted">List a place, Link to an article.<br/>
     Lets support those that helped when it mattered.</p>
-    <%= react_component("Search", id: 'bizSearch') %>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <%= form_tag businesses_path, method: :get do %>
+          <%= react_component("Search", id: 'bizSearch', url: '/businesses.json', placeHolder: 'Search by Name') %>
+        <% end %>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <%= form_tag locations_path, method: :get do %>
+          <%= react_component("LocationSearchInput", id: 'locationSearch', url: '/locations.json', placeHolder: 'Search by Location') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div id="map"></div>
+  <div id="results" class="container">
   </div>
 </section>

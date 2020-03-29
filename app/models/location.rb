@@ -13,11 +13,9 @@ class Location < ApplicationRecord
   before_save :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
   after_commit :reindex_business, if: ->(obj){ obj.address_changed? }
 
-  delegate :name, to: :business
-
   def geography_hash
     return nil unless latlon
-    
+
     {
       lat: latlon.latitude,
       lon: latlon.longitude
@@ -27,7 +25,7 @@ class Location < ApplicationRecord
   def search_data
     {
       name: name,
-      autocomplete_name: name,
+      autocomplete_name: "#{business.name} - #{name}",
       location: {
         lat: latitude,
         lon: longitude

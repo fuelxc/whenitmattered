@@ -10,9 +10,7 @@ class Search extends React.Component {
     location: '',
     latitude: undefined,
     longitude: undefined,
-    isLoading: false,
-    id: '',
-    options: []
+    isLoading: false
   }
 
   handleInputChange = () => {
@@ -21,16 +19,24 @@ class Search extends React.Component {
     })
   }
 
+  searchUrl = (query) => {
+    return `${this.props.url}?q=${query}`
+  }
+
   render () {
     return (
       <React.Fragment>
         <AsyncTypeahead
-          id={this.state.id}
+          id={this.props.id}
           isLoading={this.state.isLoading}
           labelKey={option => `${option.name}`}
+          bsSize='large'
+          minLength={2}
+          maxResults={20}
+          placeholder={this.props.placeHolder}
           onSearch={(query) => {
             this.setState({isLoading: true});
-            fetch(`businesses.json?q=${query}`)
+            fetch(this.searchUrl(query))
               .then(resp => resp.json())
               .then(json => this.setState({
                 isLoading: false,
