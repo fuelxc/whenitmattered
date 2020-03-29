@@ -66,4 +66,6 @@ gem "react-rails", "~> 2.6"
 
 gem "bootstrap", "~> 4.4"
 
-gem "font-awesome-rails", "~> 4.7"
+gem 'font_awesome5_rails'
+gem 'devise-bootstrap-views'
+gem 'devise-i18n'

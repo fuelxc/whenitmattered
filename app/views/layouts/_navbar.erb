@@ -1,0 +1,19 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="/"><%= fa_icon "city" %></a>
+  <form class="form-inline">
+    <% if user_signed_in? %>
+      <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-outline-primary", role: "button" do %>
+        Sign Out <%= fa_icon "sign-out-alt"%>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: "btn btn-outline-primary", role: "button" do %>
+        <%= fa_icon "sign-in-alt"%> Sign in
+      <% end %>
+      <div style="padding-left: 10px;">
+        <%= link_to new_user_registration_path, class: "btn btn-outline-success", role: "button" do %>
+          <%= fa_icon "user"%> Sign up
+        <% end %>
+      </div>
+    <% end %>
+  </form>
+</nav>
