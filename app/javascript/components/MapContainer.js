@@ -80,7 +80,7 @@ export class MapContainer extends React.Component {
            streetViewControl={false}
            fullscreenControl={false}
            zoom={14} 
-           className="vw-100 vh-100 mh-300" 
+           className="w-100 h-75 mh-300" 
            initialCenter={this.props.initialCenter}
            onReady={this.props.onReady}
            onBounds_changed={this.handleBoundsChange}
