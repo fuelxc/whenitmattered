@@ -69,3 +69,5 @@ gem "bootstrap", "~> 4.4"
 gem 'font_awesome5_rails'
 gem 'devise-bootstrap-views'
 gem 'devise-i18n'
+gem 'cocoon'
+gem 'simple_form'

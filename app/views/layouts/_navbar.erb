@@ -1,19 +1,43 @@
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-light bg-light navbar-expand-md">
   <a class="navbar-brand" href="/"><%= fa_icon "city" %></a>
-  <form class="form-inline">
-    <% if user_signed_in? %>
-      <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-outline-primary", role: "button" do %>
-        Sign Out <%= fa_icon "sign-out-alt"%>
-      <% end %>
-    <% else %>
-      <%= link_to new_user_session_path, class: "btn btn-outline-primary", role: "button" do %>
-        <%= fa_icon "sign-in-alt"%> Sign in
-      <% end %>
-      <div style="padding-left: 10px;">
-        <%= link_to new_user_registration_path, class: "btn btn-outline-success", role: "button" do %>
-          <%= fa_icon "user"%> Sign up
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to "Businesses", businesses_path, class: "nav-link" %>
+      </li>
+      <%# <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li> %>
+    </ul>
+    <form class="form-inline">
+      <% if user_signed_in? %>
+        <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-outline-primary", role: "button" do %>
+          Sign Out <%= fa_icon "sign-out-alt"%>
         <% end %>
-      </div>
-    <% end %>
-  </form>
+      <% else %>
+        <%= link_to new_user_session_path, class: "btn btn-outline-primary", role: "button" do %>
+          <%= fa_icon "sign-in-alt"%> Sign in
+        <% end %>
+        <div style="padding-left: 10px;">
+          <%= link_to new_user_registration_path, class: "btn btn-outline-success", role: "button" do %>
+            <%= fa_icon "user"%> Sign up
+          <% end %>
+        </div>
+      <% end %>
+    </form>
+  </div>
 </nav>

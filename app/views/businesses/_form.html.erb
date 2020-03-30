@@ -1,27 +1,23 @@
-<%= form_with(model: business, local: true) do |form| %>
-  <% if business.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(business.errors.count, "error") %> prohibited this business from being saved:</h2>
-
-      <ul>
-        <% business.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= simple_form_for business do |f| %>
+  <%= f.input :name %>
+  <%= f.input :notes %>
+  <h3>Locations</h3>
+  <div id="locations">
+    <%= f.simple_fields_for :locations do |location| %>
+      <%= render 'location_fields', f: location %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'Add Location', f, :locations %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
   </div>
-
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_area :notes %>
+  <h3>Articles</h3>
+  <div id="articles">
+    <%= f.simple_fields_for :articles do |article| %>
+      <%= render 'article_fields', f: article %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'Add Article', f, :articles %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>

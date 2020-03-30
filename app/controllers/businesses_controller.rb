@@ -70,18 +70,29 @@ class BusinessesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def business_params
-    params.require(:business).permit(:name, :lonlat, :opengraph_data, :notes)
+    params.require(:business).permit(:name, :lonlat, :opengraph_data, :notes,
+      locations_attributes: [:address, :id, :_destroy],
+      articles_attributes: [:url, :id, :_destroy]
+    )
   end
 
   def search_params
-    params.permit(:q)
+    params.permit(:q, :limit)
   end
 
   def load_businesses
     if search_params.keys.length == 3
-      Business.search search_params[:q] limit: 50
+      Business.search search_params[:q], limit: limit
     else
       Business.limit(10)
     end
+  end
+
+  def limit
+    search_params[:limit] || limit_by_format
+  end
+
+  def limit_by_format
+    params[:format] == "json" ? 50 : 20
   end
 end
