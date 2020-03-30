@@ -31,6 +31,10 @@ class Business < ApplicationRecord
     }
   end
 
+  def image_url
+    opengraph_data&.fetch("image", nil)
+  end
+
   private
 
   def scrape_opengraph

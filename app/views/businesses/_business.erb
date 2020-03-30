@@ -1,0 +1,24 @@
+<div class="col-sm-12 col-md-6 col-lg-4 float-right ">
+  <div class="row">
+    <% if business.image_url.present? %>
+      <div class="col-4">
+        <%= link_to business.url, target: '_blank' do %>
+          <%= image_tag business.image_url, class: 'img-fluid' %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="col">
+      <%= link_to business.url, target: '_blank' do %>
+        <h3><%= business.name %></h3>
+      <% end %>
+      <p>
+        <% business.articles.each do |article| %>
+          <%= link_to article.headline, article.url, target: '_blank' %>
+        <% end %>
+      </p>
+      <div class="d-flex justify-content-end">
+        <%= link_to "View", business_path(business), class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+  </div>
+</div>

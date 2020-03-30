@@ -9,6 +9,13 @@ module ScraperConcern
   end
   
   def manual_data(scraper_url)
-
+    mi =  MetaInspector.new(scraper_url)
+    {
+      title: mi.best_title,
+      description: mi.best_description,
+      author: mi.best_author,
+      image: mi.images.best,
+      url: mi.url 
+    }
   end
 end

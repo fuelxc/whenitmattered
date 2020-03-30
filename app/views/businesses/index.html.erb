@@ -2,35 +2,16 @@
 <div class="container">
   
   <div class="row">
-    <h1>Businesses</h1>
+    <div class="d-flex justify-content-between">
+      <div><h1>Businesses</h1></div>
+      <div>
+        <%= link_to new_business_path, class: 'btn btn-outline-primary' do %>
+          <%= fa_icon "plus" %> New
+        <% end %>
+      </div>
+    </span>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Notes</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @businesses.each do |business| %>
-        <tr>
-          <td><%= business.name %></td>
-          <td><%= business.notes %></td>
-          <td><%= link_to 'Show', business %></td>
-          <% if current_user.admin? %>
-            <td><%= link_to 'Edit', edit_business_path(business) %></td>
-            <td><%= link_to 'Destroy', business, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br>
-
-  <%= link_to 'New Business', new_business_path %>
+  <%= render partial: "business", collection: @businesses %>
 </div>
 
 

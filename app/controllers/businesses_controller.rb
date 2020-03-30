@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
-  before_action :set_business, only: [:show, :edit, :update, :destroy]
+  before_action :business, only: [:show, :edit, :update, :destroy]
 
   # GET /businesses
   # GET /businesses.json
@@ -68,9 +68,10 @@ class BusinessesController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_business
-    @business = Business.find(params[:id])
+  def business
+    @business ||= Business.find(params[:id])
   end
+  helper_method :business
 
   # Only allow a list of trusted parameters through.
   def business_params

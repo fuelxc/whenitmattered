@@ -25,10 +25,14 @@ class Location < ApplicationRecord
     }
   end
 
+  def display_name
+    [business.name, name].reject(&:blank?).join(' - ')
+  end
+
   def search_data
     {
       name: name,
-      autocomplete_name: "#{business.name} - #{name}",
+      autocomplete_name: display_name,
       location: {
         lat: latitude,
         lon: longitude
