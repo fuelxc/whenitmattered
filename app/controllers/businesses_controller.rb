@@ -15,6 +15,8 @@ class BusinessesController < ApplicationController
   # GET /businesses/new
   def new
     @business = Business.new
+    @business.articles.build
+    @business.locations.build
   end
 
   # GET /businesses/1/edit
@@ -31,6 +33,8 @@ class BusinessesController < ApplicationController
         format.html { redirect_to @business, notice: 'Business was successfully created.' }
         format.json { render :show, status: :created, location: @business }
       else
+        @business.articles.build if @business.articles.empty?
+        @business.locations.build if @business.locations.empty?
         format.html { render :new }
         format.json { render json: @business.errors, status: :unprocessable_entity }
       end

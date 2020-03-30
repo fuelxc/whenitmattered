@@ -55,6 +55,7 @@ export class MapContainer extends React.Component {
     return this.state.locations.map((location, _) => 
       <Marker name={location.display_name} 
         address={location.address}
+        url={location.url}
         articles={location.articles}
         onClick={this.onMarkerClick}
         position={{
@@ -92,7 +93,7 @@ export class MapContainer extends React.Component {
           onClose={this.onInfoWindowClose}
           visible={this.state.showingInfoWindow}>
           <div>
-            <h4>{this.state.selectedPlace.name}</h4>
+            <h4><a href={this.state.selectedPlace.url} target="_new">{this.state.selectedPlace.name}</a></h4>
             <h6>{this.state.selectedPlace.address}</h6>
             {this.headlines()}
           </div>

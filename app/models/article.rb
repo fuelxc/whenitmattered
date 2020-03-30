@@ -18,8 +18,7 @@ class Article < ApplicationRecord
   private
 
   def scrape_opengraph
-    response = Faraday.get(url)
-    self.opengraph_data = OGP::OpenGraph.new(response.body)&.data
+    self.opengraph_data = scrape_data(url)
     crawled_at = DateTime.now
   end
 end

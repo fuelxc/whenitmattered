@@ -14,6 +14,7 @@ class Location < ApplicationRecord
   after_commit :reindex_business, if: ->(obj){ obj.address_changed? }
 
   delegate :articles, to: :business
+  delegate :url, to: :business
 
   def geography_hash
     return nil unless latlon

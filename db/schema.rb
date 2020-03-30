@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_29_145740) do
+ActiveRecord::Schema.define(version: 2020_03_30_004302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 2020_03_29_145740) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "national", default: false
+    t.string "url"
+    t.hstore "opengraph_data"
     t.index ["lonlat"], name: "index_businesses_on_lonlat", using: :gist
     t.index ["national"], name: "index_businesses_on_national"
   end

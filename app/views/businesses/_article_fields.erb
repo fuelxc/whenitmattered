@@ -1,4 +1,6 @@
 <div class="nested-fields">
   <%= f.input :url %>
-  <%= link_to_remove_association "Remove", f %>
+  <% if current_user && current_user.admin? %>
+    <%= link_to_remove_association "Remove", f %>
+  <% end %>
 </div>

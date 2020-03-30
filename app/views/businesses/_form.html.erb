@@ -1,23 +1,36 @@
-<%= simple_form_for business do |f| %>
-  <%= f.input :name %>
-  <%= f.input :notes %>
-  <h3>Locations</h3>
-  <div id="locations">
-    <%= f.simple_fields_for :locations do |location| %>
-      <%= render 'location_fields', f: location %>
+<div class="container">
+  <%= simple_form_for business do |f| %>
+    <%= f.input :name %>
+    <%= f.input :url %>
+    <% if current_user && current_user.admin? %>
+      <%= f.input :notes %>
     <% end %>
-    <div class="links">
-      <%= link_to_add_association 'Add Location', f, :locations %>
+    <div class="row">
+     <div class="col-sm-12 col-md-6">
+        <h3>Locations</h3>
+        <div id="locations">
+          <%= f.simple_fields_for :locations do |location| %>
+            <%= render 'location_fields', f: location %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association 'Add Location', f, :locations, class: 'btn btn-outline-primary' %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <h3>Articles</h3>
+        <div id="articles">
+          <%= f.simple_fields_for :articles do |article| %>
+            <%= render 'article_fields', f: article %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association 'Add Article', f, :articles, class: 'btn btn-outline-primary' %>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <h3>Articles</h3>
-  <div id="articles">
-    <%= f.simple_fields_for :articles do |article| %>
-      <%= render 'article_fields', f: article %>
-    <% end %>
-    <div class="links">
-      <%= link_to_add_association 'Add Article', f, :articles %>
+    <div class="d-flex justify-content-end">
+      <%= f.button :submit, class: 'btn btn-success' %>
     </div>
-  </div>
-  <%= f.button :submit, class: 'btn btn-primary' %>
-<% end %>
+  <% end %>
+</div>
