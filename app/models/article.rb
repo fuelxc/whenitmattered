@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'faraday'
-require 'ogp'
-
 class Article < ApplicationRecord
+  include ScraperConcern
   belongs_to :business
 
   validates :business, presence: true

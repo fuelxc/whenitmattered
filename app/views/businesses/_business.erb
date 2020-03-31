@@ -1,23 +1,21 @@
-<div class="col-sm-12 col-md-6 col-lg-4 float-right ">
-  <div class="row">
-    <% if business.image_url.present? %>
-      <div class="col-4">
-        <%= link_to business.url, target: '_blank' do %>
-          <%= image_tag business.image_url, class: 'img-fluid' %>
-        <% end %>
-      </div>
-    <% end %>
-    <div class="col">
-      <%= link_to business.url, target: '_blank' do %>
-        <h3><%= business.name %></h3>
+<div class="container">
+  <div class="card">
+    <div class="row">
+      <% if business.image_url.present? %>
+        <div class="col-md-4">
+          <%= link_to business.url, target: '_blank' do %>
+            <%= image_tag business.image_url, class: 'img-fluid' %>
+          <% end %>
+        </div>
       <% end %>
-      <p>
-        <% business.articles.each do |article| %>
-          <%= link_to article.headline, article.url, target: '_blank' %>
-        <% end %>
-      </p>
-      <div class="d-flex justify-content-end">
-        <%= link_to "View", business_path(business), class: "btn btn-outline-primary" %>
+      <div class="col">
+        <div class="card-body">
+          <h5 class="card-title"><%= business.name %></h5>
+          <% business.articles.each do |article| %>
+            <p class="card-text"><%= link_to article.headline, article.url, target: '_blank' %></p>
+          <% end %>
+          <%= link_to "View", business_path(business), class: "btn btn-outline-secondary" %>
+        </div>
       </div>
     </div>
   </div>

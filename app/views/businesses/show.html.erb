@@ -1,8 +1,15 @@
 <div class="container">
-  <div class="row">
-    <%= link_to business.url, target: '_blank' do %>
+  <div class="row d-flex">
+    <div class="col">
       <h1><%= business.name %></h1>
-    <% end %>
+    </div>
+    <div class="col">
+      <% if business.url.present? %>
+        <%= link_to business.url, target: '_blank' do %>
+          <%= business.url %> <%= fa_icon "out" %> 
+        <% end %>
+      <% end %>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-2">
