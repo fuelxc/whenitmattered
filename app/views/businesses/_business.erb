@@ -12,7 +12,7 @@
         <div class="card-body">
           <h5 class="card-title"><%= business.name %></h5>
           <% if business.notes.present? %>
-            <p class="card-text"><%= business.notes %></p>
+            <p class="card-text small"><%= business.notes %></p>
           <% end %>
           <p class="card-text">
             <small class="text-muted mr-2"><%= pluralize(business.articles.count, 'Article') %></small>
