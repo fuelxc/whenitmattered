@@ -1,0 +1,26 @@
+<div id="addArticleModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <%= form_tag add_article_business_path(business), method: :post do %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Article</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">URL</span>
+            </div>
+            <input type="text" class="form-control" placeholder="https://news.com/article" name="url" aria-describedby="inputGroup-sizing-lg">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

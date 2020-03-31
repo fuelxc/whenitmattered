@@ -1,0 +1,32 @@
+<div id="addLocationModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <%= form_tag add_location_business_path(business), method: :post do %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Location</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group input-group-lg mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Name</span>
+            </div>
+            <input type="text required" class="form-control" placeholder="Anytown" name="location[name]" aria-describedby="inputGroup-sizing-lg">
+          </div>
+          <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Address</span>
+            </div>
+            <input type="text required" class="form-control" placeholder="123 E Main St, Anytown, AZ, 85001" name="location[address]" aria-describedby="inputGroup-sizing-lg">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

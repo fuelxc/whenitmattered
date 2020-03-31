@@ -28,7 +28,7 @@
               <li class="list-group-item"><p><%= l.display_name %><br><%= l.address %></p></li>
             <% end %>
             <li class="list-group-item">
-              <%= link_to '#', class: 'btn btn-outline-primary' do %>
+              <%= link_to '#', data: { toggle: "modal", target: "#addLocationModal" }, class: 'btn btn-outline-primary' do %>
                 <%= fa_icon 'plus' %> Location
               <% end %>
             </li>
@@ -41,7 +41,7 @@
               <li class="list-group-item"><%= link_to article.headline, article.url, target: '_blank' %></li>
             <% end %>
             <li class="list-group-item">
-              <%= link_to '#', class: 'btn btn-outline-primary' do %>
+              <%= link_to '#', data: { toggle: "modal", target: "#addArticleModal" }, class: 'btn btn-outline-primary' do %>
                 <%= fa_icon 'plus' %> Article
               <% end %>
             </li>
@@ -55,3 +55,5 @@
   <%= link_to 'Edit', edit_business_path(@business) %> |
 <% end %>
 <%= link_to 'Back', businesses_path %>
+<%= render partial: 'location_modal' %>
+<%= render partial: 'article_modal' %>

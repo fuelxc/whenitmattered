@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
-  before_action :business, only: [:show, :edit, :update, :destroy]
+  before_action :business, only: [:show, :edit, :update, :destroy, :add_location, :add_article]
 
   # GET /businesses
   # GET /businesses.json
@@ -21,6 +21,30 @@ class BusinessesController < ApplicationController
 
   # GET /businesses/1/edit
   def edit
+  end
+
+  def add_location
+    respond_to do |format|
+      if business.locations.create(location_params)
+        format.html { redirect_to @business, notice: 'Location was successfully added.' }
+        format.json { render :show, status: :ok, location: @business }
+      else
+        format.html { render :edit, notice: 'Could not add the location.' }
+        format.json { render json: @business.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def add_article
+    respond_to do |format|
+      if business.articles.create(url: location_params[:url])
+        format.html { redirect_to @business, notice: 'Article was successfully added.' }
+        format.json { render :show, status: :ok, location: @business }
+      else
+        format.html { render :edit, notice: 'Could not add the article.' }
+        format.json { render json: @business.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /businesses
@@ -83,6 +107,14 @@ class BusinessesController < ApplicationController
 
   def search_params
     params.permit(:q, :limit)
+  end
+
+  def location_params
+    params.require(:location).permit(:address, :name)
+  end
+
+  def article_params
+    params.permit(:url)
   end
 
   def load_businesses
