@@ -23,4 +23,7 @@
   <div class="row row-cols-1 row-cols-md-3">
     <%= render partial: "business", collection: @businesses %>
   </div>
+  <div class="row d-flex justify-content-end p-3">
+    <%= paginate @businesses, theme: 'twitter-bootstrap-4' %>
+  </div>
 </div>

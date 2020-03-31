@@ -106,7 +106,7 @@ class BusinessesController < ApplicationController
   end
 
   def search_params
-    params.permit(:q, :limit)
+    params.permit(:q, :limit, :page)
   end
 
   def location_params
@@ -121,7 +121,7 @@ class BusinessesController < ApplicationController
     if search_params.has_key?(:q)
       Business.search search_params[:q], limit: limit, match: :word_start
     else
-      Business.limit(10)
+      Business.search "*",  page: search_params[:page], per_page: limit
     end
   end
 
@@ -130,6 +130,6 @@ class BusinessesController < ApplicationController
   end
 
   def limit_by_format
-    params[:format] == "json" ? 50 : 20
+    params[:format] == "json" ? 50 : 9
   end
 end
