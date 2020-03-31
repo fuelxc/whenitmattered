@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-3">
   <div class="card">
     <div class="row">
       <% if business.image_url.present? %>
@@ -11,10 +11,9 @@
       <div class="col">
         <div class="card-body">
           <h5 class="card-title"><%= business.name %></h5>
-          <% business.articles.each do |article| %>
-            <p class="card-text"><%= link_to article.headline, article.url, target: '_blank' %></p>
-          <% end %>
-          <%= link_to "View", business_path(business), class: "btn btn-outline-secondary" %>
+          <p class="card-text"><%= pluralize(business.articles.count, 'article') %><br />
+          <%= pluralize(business.locations.count, 'location') %></p>
+          <%= link_to "View", business_path(business), class: "btn btn-outline-secondary mb-2 float-right" %>
         </div>
       </div>
     </div>
