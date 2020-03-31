@@ -16,6 +16,10 @@
  
  @import "bootstrap";
  @import '@fortawesome/fontawesome-free';
+
+ h1 .small {
+  font-size: 30%;
+ }
  
  .rbt .rbt-input-main::-ms-clear {
   display: none;

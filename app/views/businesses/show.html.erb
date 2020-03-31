@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row d-flex">
     <div class="col">
-      <h1><%= business.name %></h1>
-    </div>
-    <div class="col">
+      <h1><%= business.name %>
       <% if business.url.present? %>
-        <%= link_to business.url, target: '_blank' do %>
-          <%= business.url %> <%= fa_icon "out" %> 
-        <% end %>
-      <% end %>
+        <span class="small text-monospace align-baseline">
+          <%= link_to business.url, target: '_blank' do %>
+            <%= business.url %> <%= fa_icon "external-link-alt" %> 
+          <% end %>
+        </span>
+      <% end %></h1>
     </div>
   </div>
   <div class="row">
