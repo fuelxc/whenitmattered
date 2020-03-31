@@ -75,8 +75,7 @@ export class MapContainer extends React.Component {
   render() {
 
     return (
-      <Map google={window.google} 
-           scrollwheel={false}
+      <Map google={window.google}
            mapTypeControl={false}
            streetViewControl={false}
            fullscreenControl={false}
@@ -86,6 +85,14 @@ export class MapContainer extends React.Component {
            onReady={this.props.onReady}
            onBounds_changed={this.handleBoundsChange}
            onClick={this.onMapClicked}
+           clickableIcons={false}
+           gestureHandling="cooperative"
+           styles={[
+            {
+              "featureType": "poi.business",
+              stylers: [{visibility: 'off'}]
+            }
+           ]}
       >
         {this.markers()}
         <InfoWindow
