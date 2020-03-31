@@ -24,6 +24,9 @@
       </li> %>
     </ul>
     <form class="form-inline">
+      <%= link_to new_business_path, class: "btn btn-success mr-3 pr-10" do %>
+        Add a Business
+      <% end %>
       <% if user_signed_in? %>
         <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-outline-primary", role: "button" do %>
           Sign Out <%= fa_icon "sign-out-alt"%>
@@ -32,7 +35,7 @@
         <%= link_to new_user_session_path, class: "btn btn-outline-primary", role: "button" do %>
           <%= fa_icon "sign-in-alt"%> Sign in
         <% end %>
-        <div style="padding-left: 10px;">
+        <div class="pl-10">
           <%= link_to new_user_registration_path, class: "btn btn-outline-success", role: "button" do %>
             <%= fa_icon "user"%> Sign up
           <% end %>
