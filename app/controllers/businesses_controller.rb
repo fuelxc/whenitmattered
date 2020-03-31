@@ -86,8 +86,8 @@ class BusinessesController < ApplicationController
   end
 
   def load_businesses
-    if search_params.keys.length == 3
-      Business.search search_params[:q], limit: limit
+    if search_params.has_key?(:q)
+      Business.search search_params[:q], limit: limit, match: :word_start
     else
       Business.limit(10)
     end

@@ -197,21 +197,21 @@
 /**
  * Input Groups
  */
-.input-group > .rbt {
-  flex: 1;
-}
+// .input-group > .rbt {
+//   flex: 1;
+// }
 
-.input-group > .rbt .rbt-input-hint,
-.input-group > .rbt .rbt-aux {
-  z-index: 5;
-}
+// .input-group > .rbt .rbt-input-hint,
+// .input-group > .rbt .rbt-aux {
+//   z-index: 5;
+// }
 
-.input-group > .rbt:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
+// .input-group > .rbt:not(:first-child) .form-control {
+//   border-top-left-radius: 0;
+//   border-bottom-left-radius: 0;
+// }
 
-.input-group > .rbt:not(:last-child) .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
+// .input-group > .rbt:not(:last-child) .form-control {
+//   border-top-right-radius: 0;
+//   border-bottom-right-radius: 0;
+// }

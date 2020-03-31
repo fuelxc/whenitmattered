@@ -33,6 +33,7 @@ class BusinessSearch extends React.Component {
           bsSize='large'
           minLength={2}
           maxResults={20}
+          inputProps={{name: 'q'}}
           placeholder={this.props.placeHolder}
           onSearch={(query) => {
             this.setState({isLoading: true});

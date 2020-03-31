@@ -1,18 +1,26 @@
 
 <div class="container">
-  
-  <div class="row">
-    <div class="d-flex justify-content-between">
-      <div><h1>Businesses</h1></div>
-      <div>
-        <%= link_to new_business_path, class: 'btn btn-outline-primary' do %>
-          <%= fa_icon "plus" %> New
-        <% end %>
-      </div>
-    </span>
+  <div class="row mt-2">
+    <div class="col-sm-12 col-md-4"><h1>Businesses</h1></div>
+    <div class="col-sm-12 col-md-4 pt-2">
+      <%= form_tag businesses_path, method: :get do %>
+        <div class="row">
+          <div class="col-10">
+            <%= react_component('BusinessSearch', id: 'businessSearch', placeHolder: 'Search...', url: businesses_path(format: :json)) %>
+          </div>
+          <div class="col-2">
+            <%= submit_tag 'Go', class: 'btn btn-outline-secondary' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm-12 col-md-4 pt-2">
+      <%= link_to new_business_path, class: 'btn btn-outline-primary float-right' do %>
+        <%= fa_icon "plus" %> New
+      <% end %>
+    </div>
   </div>
-  <%= render partial: "business", collection: @businesses %>
+  <div class="row">
+    <%= render partial: "business", collection: @businesses %>
+  </div>
 </div>
-
-
-
