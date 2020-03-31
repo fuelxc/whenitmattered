@@ -1,4 +1,5 @@
 <div class="nested-fields">
+  <%= f.input :name %>
   <%= f.input :address %>
   <% if current_user && current_user.admin? %>
     <%= link_to_remove_association "Remove", f %>
