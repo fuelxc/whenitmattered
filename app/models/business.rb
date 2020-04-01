@@ -16,6 +16,8 @@ class Business < ApplicationRecord
 
   geocoded_by :address do |obj, results|
     if geo = results.first
+      obj.lat = geo.latitude
+      obj.lon = geo.longitude
       obj.latlon = "POINT(#{geo.longitude} #{geo.latitude})"
     end
   end

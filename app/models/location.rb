@@ -18,6 +18,12 @@ class Location < ApplicationRecord
   delegate :articles, to: :business
   delegate :url, to: :business
 
+  def nearby(latitude, longitude, distance_in_mile = 1)
+    where(%{
+     ST_Distance(clinic_lonlat, 'POINT(%f %f)') < %d
+    } % [longitude, latitude, distance_in_mile * 1609.34]) # approx
+  end
+
   def self.within(tl_lat:, tl_lon:, br_lat:, br_lon:)
     where(lat: (br_lat..tl_lat), lon: (tl_lon..br_lon))
   end

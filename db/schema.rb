@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_01_021735) do
+ActiveRecord::Schema.define(version: 2020_04_01_025455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_021735) do
 
   create_table "businesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.geography "lonlat", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geography "latlon", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.text "notes"
     t.string "address"
     t.datetime "created_at", precision: 6, null: false
@@ -38,7 +38,10 @@ ActiveRecord::Schema.define(version: 2020_04_01_021735) do
     t.boolean "national", default: false
     t.string "url"
     t.hstore "opengraph_data"
-    t.index ["lonlat"], name: "index_businesses_on_lonlat", using: :gist
+    t.decimal "lat"
+    t.decimal "lon"
+    t.index ["lat", "lon"], name: "index_businesses_on_lat_and_lon"
+    t.index ["latlon"], name: "index_businesses_on_latlon", using: :gist
     t.index ["national"], name: "index_businesses_on_national"
   end
 
