@@ -81,7 +81,7 @@ class LocationsController < ApplicationController
     if search_params.has_key?(:radius) && search_params.keys.length == 3
       Location.search "*", where: {location: {near: {lat: search_params[:lat], lon: search_params[:lon]}, within: search_params[:radius]}}, limit: 50
     elsif search_params.has_key?(:tl_lat) && search_params.keys.length == 4
-      Location.search "*", where: {location: {top_left: {lat: search_params[:tl_lat], lon: search_params[:tl_lon]}, bottom_right: {lat: search_params[:br_lat], lon: search_params[:br_lon]}}}, limit: 50
+      Location.within(search_params.to_hash.symbolize_keys).limit(50)
     else
       Location.limit(10)
     end

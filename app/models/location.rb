@@ -6,6 +6,8 @@ class Location < ApplicationRecord
 
   geocoded_by :address do |obj, results|
     if geo = results.first
+      obj.lat = geo.latitude
+      obj.lon = geo.longitude
       obj.latlon = "POINT(#{geo.longitude} #{geo.latitude})"
     end
   end
@@ -16,9 +18,12 @@ class Location < ApplicationRecord
   delegate :articles, to: :business
   delegate :url, to: :business
 
+  def self.within(tl_lat:, tl_lon:, br_lat:, br_lon:)
+    where(lat: (br_lat..tl_lat), lon: (tl_lon..br_lon))
+  end
+
   def geography_hash
     return nil unless latlon
-
     {
       lat: latlon.latitude,
       lon: latlon.longitude
