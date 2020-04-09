@@ -6,8 +6,7 @@ import {Map, InfoWindow, Marker} from 'google-maps-react';
 export class MapContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      locations: [],
+    this.state = {
       activeMarker: {},
       selectedPlace: { articles: [] },
       showingInfoWindow: false
@@ -35,25 +34,10 @@ export class MapContainer extends React.Component {
       });
   };
 
-  searchUrl = (bounds) => {
-    let northEast = bounds.getNorthEast();
-    let southWest = bounds.getSouthWest();
-
-    return `/locations.json?tl_lat=${northEast.lat()}&tl_lon=${southWest.lng()}&br_lat=${southWest.lat()}&br_lon=${northEast.lng()}`
-  }
-
-  handleBoundsChange = (mapProps, map) => {
-    fetch(this.searchUrl(map.getBounds()))
-      .then(resp => resp.json())
-      .then(json => this.setState({
-        isLoading: false,
-        locations: json,
-      }));
-  }
-
   markers = () => {
-    return this.state.locations.map((location, _) => 
-      <Marker name={location.display_name} 
+    return this.props.locations.map((location, _) => 
+      <Marker name={location.display_name}
+        key={location.id}
         address={location.address}
         url={location.url}
         articles={location.articles}
@@ -83,7 +67,7 @@ export class MapContainer extends React.Component {
            className="w-100 h-75 mh-300" 
            initialCenter={this.props.initialCenter}
            onReady={this.props.onReady}
-           onBounds_changed={this.handleBoundsChange}
+           onBounds_changed={this.props.handleBoundsChange}
            onClick={this.onMapClicked}
            clickableIcons={false}
            gestureHandling="cooperative"

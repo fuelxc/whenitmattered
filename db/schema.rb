@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_01_025455) do
+ActiveRecord::Schema.define(version: 2020_04_07_153704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -40,9 +40,22 @@ ActiveRecord::Schema.define(version: 2020_04_01_025455) do
     t.hstore "opengraph_data"
     t.decimal "lat"
     t.decimal "lon"
+    t.string "category_id"
+    t.boolean "online", default: false
+    t.index ["category_id", "lat", "lon"], name: "businesses_category_lat_lon_idx"
+    t.index ["category_id"], name: "index_businesses_on_category_id"
     t.index ["lat", "lon"], name: "index_businesses_on_lat_and_lon"
     t.index ["latlon"], name: "index_businesses_on_latlon", using: :gist
     t.index ["national"], name: "index_businesses_on_national"
+    t.index ["online"], name: "index_businesses_on_online"
+  end
+
+  create_table "categories", id: :string, force: :cascade do |t|
+    t.string "display_name"
+    t.text "description"
+    t.string "icon_class"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -78,5 +91,6 @@ ActiveRecord::Schema.define(version: 2020_04_01_025455) do
   end
 
   add_foreign_key "articles", "businesses"
+  add_foreign_key "businesses", "categories"
   add_foreign_key "locations", "businesses"
 end

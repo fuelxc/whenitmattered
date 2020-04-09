@@ -2,6 +2,8 @@ class Business < ApplicationRecord
   include ScraperConcern
   searchkick word_start: [:autocomplete_name], suggest: [:name], locations: [:location]
 
+  belongs_to :category
+
   has_many :articles, dependent: :destroy
   has_many :locations, dependent: :destroy
 
@@ -9,10 +11,8 @@ class Business < ApplicationRecord
   accepts_nested_attributes_for :locations, allow_destroy: true, reject_if: ->(attributes){ attributes['address'].blank? }
 
   validates :name, presence: true
-  validates :articles, presence: true
-  validates :locations, presence: true
-
-  before_save :scrape_opengraph, if: ->(obj){ obj.url_changed? }
+  validates :notes, presence: { message: "or a linked article is required." }, if: ->(obj){ obj.articles.empty? }
+  validates :online, inclusion: { in: [true], message: "or a location is required." }, if: ->(obj){ obj.locations.empty? }
 
   geocoded_by :address do |obj, results|
     if geo = results.first
@@ -23,14 +23,18 @@ class Business < ApplicationRecord
   end
 
   before_save :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
+  before_save :scrape_opengraph, if: ->(obj){ obj.url_changed? }
+  after_commit :clear_category_cache, if: ->(obj){ obj.category.changed? }
   after_commit :reindex_locations, if: ->(obj){ obj.name_changed? }
 
+  def nearby(latitude, longitude, distance_in_mile = 1)
+    where(%{
+     ST_Distance(clinic_lonlat, 'POINT(%f %f)') < %d
+    } % [longitude, latitude, distance_in_mile * 1609.34]) # approx
+  end
+
   def self.within(tl_lat:, tl_lon:, br_lat:, br_lon:)
-    factory = RGeo::Geographic.spherical_factory
-    nw = factory.point(tl_lat, tl_lon)
-    se = factory.point(br_lat, br_lon)
-    window = RGeo::Cartesian::BoundingBox.create_from_points(nw, se).to_geometry
-    where("latlon && ?", window)
+    where(lat: (br_lat..tl_lat), lon: (tl_lon..br_lon))
   end
 
   def search_data
@@ -57,5 +61,9 @@ class Business < ApplicationRecord
 
   def reindex_locations
     locations.map(&:reindex)
+  end
+  
+  def clear_category_cache
+    Rails.cache.delete(:category_options_array)
   end
 end

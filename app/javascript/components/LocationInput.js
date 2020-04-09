@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class LocationSearchInput extends React.Component {
+class LocationInput extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -26,37 +26,26 @@ class LocationSearchInput extends React.Component {
     
     this.autocomplete.setTypes(['(regions)']);
 
-    let { onPlaceChange } = this.props;
+    let { onLocationChange } = this.props;
 
     this.autocomplete.addListener('place_changed', function() {
-      onPlaceChange(this.getPlace());
+      onLocationChange(this.getPlace());
     });
   }
 
   render() {
     return (
-      <section className="bg-dark p-2">
-        <div className="container">
-          <div className="row justify-content-md-center">
-            <div className="col-sm-12 col-md-6">
-              <div className="input-group input-group-lg">
-                <input id="locationInput" className='form-control' placeholder="Search by Location..." />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <input id="locationInput" className='form-control' placeholder="Search by Location..." />
     );
   }
 }
 
-LocationSearchInput.defaultProps = {
-  onPlaceChange: place => ({})
+LocationInput.defaultProps = {
+  onLocationChange: place => ({})
 }
 
-LocationSearchInput.propTypes = {
-  onPlaceChange: PropTypes.func
+LocationInput.propTypes = {
+  onLocationChange: PropTypes.func
 }
 
-
-export default LocationSearchInput
+export default LocationInput

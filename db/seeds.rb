@@ -5,10 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+category = Category.create(id: 'unknown', display_name: 'Unknown', description: 'Catch all category', icon_class: 'question-circle')
 
 Business.create(
   name: 'OHSO',
   national: false,
+  online: false,
+  category: category,
   articles_attributes: [
     {
       url: 'https://www.azfamily.com/news/continuing_coverage/coronavirus_coverage/ohso-brewery-delivers-gallons-of-hand-sanitizer---in/article_165fea08-6ed8-11ea-9a47-f3fba573b251.html'

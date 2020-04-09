@@ -2,6 +2,15 @@
   <%= simple_form_for business do |f| %>
     <%= f.input :name %>
     <%= f.input :url %>
+    <%= f.association :category %>
+    <div class="row">
+      <div class="col">
+        <%= f.input :online %>
+      </div>
+      <div class="col">
+        <%= f.input :national %>
+      </div>
+    </div>
     <%= f.input :notes %>
     <div class="row">
      <div class="col-sm-12 col-md-6">

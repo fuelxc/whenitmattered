@@ -18,7 +18,7 @@ class Location < ApplicationRecord
   delegate :articles, to: :business
   delegate :url, to: :business
 
-  def nearby(latitude, longitude, distance_in_mile = 1)
+  def self.nearby(latitude, longitude, distance_in_mile = 1)
     where(%{
      ST_Distance(clinic_lonlat, 'POINT(%f %f)') < %d
     } % [longitude, latitude, distance_in_mile * 1609.34]) # approx
@@ -26,6 +26,10 @@ class Location < ApplicationRecord
 
   def self.within(tl_lat:, tl_lon:, br_lat:, br_lon:)
     where(lat: (br_lat..tl_lat), lon: (tl_lon..br_lon))
+  end
+
+  def self.for_category_name(category_name)
+    joins(business: :category).where(businesses: {category_id: category_name})
   end
 
   def geography_hash

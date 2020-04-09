@@ -74,14 +74,18 @@ class LocationsController < ApplicationController
   end
 
   def search_params
-    params.permit(:lat, :lon, :radius, :tl_lat, :tl_lon, :br_lat, :br_lon)
+    params.permit(:lat, :lon, :radius, :tl_lat, :tl_lon, :br_lat, :br_lon, :category)
   end
 
   def load_locations
     if search_params.has_key?(:radius) && search_params.keys.length == 3
       Location.search "*", where: {location: {near: {lat: search_params[:lat], lon: search_params[:lon]}, within: search_params[:radius]}}, limit: 50
-    elsif search_params.has_key?(:tl_lat) && search_params.keys.length == 4
-      Location.within(search_params.to_hash.symbolize_keys).limit(50)
+    elsif search_params.has_key?(:tl_lat) && search_params.keys.length >= 4
+      search = Location.within(search_params.to_hash.symbolize_keys.slice(:tl_lat, :tl_lon, :br_lat, :br_lon))
+      if search_params.has_key?(:category)
+        search = search.for_category_name(search_params[:category])
+      end
+      search.limit(50)
     else
       Location.limit(10)
     end

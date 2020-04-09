@@ -29,5 +29,16 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
+  en:
+    activerecord:
+      attributes:
+        user:
+          email: "E-mail address"
+      errors:
+        models:
+          businesses:
+            attributes:
+              notes:
+                blank: "or a linked article is required"
+              online:
+                inclusion: "or a location is required"
