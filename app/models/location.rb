@@ -63,6 +63,10 @@ class Location < ApplicationRecord
     latlon&.latitude
   end
 
+  def notes
+    read_attribute(:notes) || business.notes
+  end
+
   private
 
   def reindex_business

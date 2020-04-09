@@ -39,6 +39,7 @@ export class MapContainer extends React.Component {
       <Marker name={location.display_name}
         key={location.id}
         address={location.address}
+        notes={location.notes}
         url={location.url}
         articles={location.articles}
         onClick={this.onMarkerClick}
@@ -51,9 +52,13 @@ export class MapContainer extends React.Component {
   }
 
   headlines = () => {
-    return this.state.selectedPlace.articles.map((article, ) =>
-      <p><a href={article.url} target="_new">{article.headline}</a></p>
-    )
+    if (!this.state.selectedPlace.notes) {
+      return this.state.selectedPlace.articles.map((article, _) =>
+        <p key={article.id}><a href={article.url} target="_new">{article.headline}</a></p>
+      )
+    } else {
+      return <p>{this.state.selectedPlace.notes}</p>
+    }
   }
 
   render() {
